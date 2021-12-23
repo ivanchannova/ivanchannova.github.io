@@ -20,7 +20,22 @@ https://github.com/yangcha/iview
 <body>
 
     <p>Open image: <input type="file" id="inputImage" /></p>
-    <p>Current Item name: <input type="text" id="currentItemName"></p>
+
+    <p>
+        Current Item name: <input type="text" id="currentItemName">
+    </p>
+
+    <p>
+        Store: <input type="text" name="store" id="store" readonly="true">
+        <button onclick="document.getElementById('store').value = ''">Clear</button>
+    </p>
+
+    <p>
+        <textarea id="output" name="output" rows="4" cols="50" readonly="true"></textarea><br>
+        <input type="submit" name="button" id="outputButton" onclick="displayOutput()" value="Generate output"><br><br>
+        File Name: <input type="text" name="fileName" id="fileName">
+        <input type="submit" name="downloadButton" id="downloadButton" onclick="download()" value="Download">
+    </p>
 
     <canvas id="canvas" style="margin:12px;"></canvas>
 
@@ -44,12 +59,16 @@ https://github.com/yangcha/iview
             var rect = cvs.getBoundingClientRect();
             var x = parseInt(evt.clientX - rect.left);
             var y = parseInt(evt.clientY - rect.top);
+            var name = document.getElementById("currentItemName").value;
+            var storeValue = document.getElementById("store").value;
+            var storeId = document.getElementById("store");
             copyText = x + ',' + y
             navigator.clipboard.writeText(copyText).then(function () {
                 console.log('ok')
             }, function () {
                 console.log('ko')
             });
+            storeId.value = storeValue + name + ',' + x + ',' + y + '~~'
         }
 
         function mousePos(evt) {
@@ -62,6 +81,26 @@ https://github.com/yangcha/iview
                 + p[0] + '</td><td>Green: ' + p[1] + '</td><td>Blue: '
                 + p[2] + '</td><td>Alpha: ' + p[3] + "</td></table>";
             return { x, y };
+        }
+
+        function displayOutput() {
+            var parseStore = document.getElementById("store").value;
+            var outputTo = document.getElementById('output');
+            parseStore = parseStore.replaceAll('~~', '\n');
+            outputTo.value = 'Name,X,Y\n' + parseStore;
+        }
+
+        function download() {
+            var pom = document.createElement('a');
+            var filename = document.getElementById("fileName").value;
+            var text = document.getElementById("output").value;
+            filename = filename + '.csv'
+            pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            pom.setAttribute('download', filename);
+            pom.style.display = 'none';
+            document.body.appendChild(pom);
+            pom.click();
+            document.body.removeChild(pom);
         }
 
         function handleImageFiles(e) {
