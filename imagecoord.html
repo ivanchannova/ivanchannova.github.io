@@ -20,6 +20,7 @@ https://github.com/yangcha/iview
 <body>
 
     <p>Open image: <input type="file" id="inputImage" /></p>
+    <p>Current Item name: <input type="text" id="currentItemName"></p>
 
     <canvas id="canvas" style="margin:12px;"></canvas>
 
@@ -43,7 +44,7 @@ https://github.com/yangcha/iview
             var rect = cvs.getBoundingClientRect();
             var x = parseInt(evt.clientX - rect.left);
             var y = parseInt(evt.clientY - rect.top);
-            copyText = x + ';' + y
+            copyText = x + ',' + y
             navigator.clipboard.writeText(copyText).then(function () {
                 console.log('ok')
             }, function () {
