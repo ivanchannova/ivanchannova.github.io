@@ -20,23 +20,23 @@ https://github.com/yangcha/iview
 <body>
 
     <p>Open image: <input type="file" id="inputImage" /></p>
-
-    <p>
+    <div>
         Current Item name: <input type="text" id="currentItemName">
         <button onclick="resetCount()">Next</button>
-    </p>
-
-    <p>
+    </div>
+    <div>
         Store: <input type="text" name="store" id="store" readonly="true">
         <button onclick="document.getElementById('store').value = ''">Clear</button>
-    </p>
+    </div>
 
-    <p>
-        <textarea id="output" name="output" rows="4" cols="50" readonly="true"></textarea><br>
-        <input type="submit" name="button" id="outputButton" onclick="displayOutput()" value="Generate output"><br><br>
-        File Name: <input type="text" name="fileName" id="fileName">
+    <div>
+        <textarea id="output" name="output" rows="4" cols="50" readonly="true"></textarea>
+        <input type="submit" name="button" id="outputButton" onclick="displayOutput()" value="Generate output"><br>
+    </div>
+    <div>
+        File Name: <input type="text" name="fileName" id="fileName" placeholder="image-coordinates">
         <input type="submit" name="downloadButton" id="downloadButton" onclick="download()" value="Download">
-    </p>
+    </div>
 
     <canvas id="canvas" style="margin:12px;"></canvas>
 
@@ -90,7 +90,7 @@ https://github.com/yangcha/iview
             var parseStore = document.getElementById("store").value;
             var outputTo = document.getElementById('output');
             parseStore = parseStore.replaceAll('~~', '\n');
-            outputTo.value = 'Name,X,Y\n' + parseStore;
+            outputTo.value = 'Name,Path,X,Y\n' + parseStore;
         }
 
         function download() {
