@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<!-- Credit to Chanjiang Yang 
+<!-- Credit to Chanjiang Yang for the canvas script
 https://github.com/yangcha/iview
 -->
 <html>
@@ -23,6 +23,7 @@ https://github.com/yangcha/iview
 
     <p>
         Current Item name: <input type="text" id="currentItemName">
+        <button onclick="resetCount()">Next</button>
     </p>
 
     <p>
@@ -46,6 +47,7 @@ https://github.com/yangcha/iview
         var cvs = document.getElementById('canvas');
         var ctx = cvs.getContext('2d');
         var res = document.getElementById('results');
+        var count = 0;
 
         cvs.addEventListener('mousemove', mousePos, false);
         cvs.addEventListener('click', copyMousePos, false);
@@ -68,7 +70,8 @@ https://github.com/yangcha/iview
             }, function () {
                 console.log('ko')
             });
-            storeId.value = storeValue + name + ',' + x + ',' + y + '~~'
+            storeId.value = storeValue + name + ',' + count + ',' + x + ',' + y + '~~'
+            count = count + 1
         }
 
         function mousePos(evt) {
@@ -112,6 +115,10 @@ https://github.com/yangcha/iview
                 ctx.drawImage(img, 0, 0);
             }
             img.src = url;
+        }
+
+        function resetCount() {
+            count = 0;
         }
 
     </script>
