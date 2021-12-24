@@ -16,7 +16,7 @@ https://github.com/yangcha/iview
         }
 
         div.lol {
-            margin: auto;
+            margin: 10 auto;
         }
     </style>
 </head>
@@ -24,20 +24,23 @@ https://github.com/yangcha/iview
 <body>
 
     <p>Open image: <input type="file" id="inputImage" /></p>
-    <div>
+
+    <div class="lol">
         Current Item name: <input type="text" id="currentItemName">
         <button onclick="resetCount()">Next</button>
     </div>
-    <div>
+
+    <div class="lol">
         Store: <input type="text" name="store" id="store" readonly="true">
         <button onclick="document.getElementById('store').value = ''">Clear</button>
     </div>
 
-    <div>
+    <div class="lol">
         <textarea id="output" name="output" rows="4" cols="50" readonly="true"></textarea>
         <input type="submit" name="button" id="outputButton" onclick="displayOutput()" value="Generate output"><br>
     </div>
-    <div>
+
+    <div class="lol">
         File Name: <input type="text" name="fileName" id="fileName" placeholder="image-coordinates">
         <input type="submit" name="downloadButton" id="downloadButton" onclick="download()" value="Download">
     </div>
