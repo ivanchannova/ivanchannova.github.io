@@ -16,7 +16,7 @@ https://github.com/yangcha/iview
         }
 
         div.lol {
-            margin: 10px auto;
+            margin: 12px auto;
         }
     </style>
 </head>
@@ -30,17 +30,23 @@ https://github.com/yangcha/iview
         <button onclick="resetCount()">Next</button>
     </div>
 
+    <div>
+        Current Item: <br>
+        <textarea id="currentOutput" name="currentOutput" row="7" cols="40"></textarea>
+        <button onclick="document.getElementById('currentOutput').value = ''">Reset Current</button>
+    </div>
+
     <div class="lol">
         Store: <input type="text" name="store" id="store" readonly="true">
         <button onclick="document.getElementById('store').value = ''">Clear</button>
     </div>
 
     <div class="lol">
-        <textarea id="output" name="output" rows="4" cols="50" readonly="true"></textarea>
+        <textarea id="output" name="output" rows="5" cols="50" readonly="true"></textarea>
         <input type="submit" name="button" id="outputButton" onclick="displayOutput()" value="Generate output"><br>
     </div>
 
-    <div class="lol">
+    <div class="lol" id="file">
         File Name: <input type="text" name="fileName" id="fileName" placeholder="image-coordinates">
         <input type="submit" name="downloadButton" id="downloadButton" onclick="download()" value="Download">
     </div>
@@ -61,7 +67,9 @@ https://github.com/yangcha/iview
 
         window.onload = function () {
             var inputImage = document.getElementById('inputImage');
+            var fileDiv = document.getElementById('file');
             inputImage.addEventListener('change', handleImageFiles, false);
+            file.style.visibility = "hidden";
         }
 
         function copyMousePos(evt) {
@@ -96,8 +104,10 @@ https://github.com/yangcha/iview
         function displayOutput() {
             var parseStore = document.getElementById("store").value;
             var outputTo = document.getElementById('output');
+            var fileDiv = document.getElementById('file');
             parseStore = parseStore.replaceAll('~~', '\n');
             outputTo.value = 'Name,Path,X,Y\n' + parseStore;
+            file.style.visibility = "visible";
         }
 
         function download() {
