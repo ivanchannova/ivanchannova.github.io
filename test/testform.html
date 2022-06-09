@@ -20,11 +20,6 @@
         localStorage.setItem('utm_medium', utmMediumValue);
         localStorage.setItem('utm_term', utmTermValue);
         localStorage.setItem('utm_content', utmContentValue);
-        document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign');
-        document.getElementById("utmSource").value = localStorage.getItem('utm_source');
-        document.getElementById("utmMedium").value = localStorage.getItem('utm_medium');
-        document.getElementById("utmTerm").value = localStorage.getItem('utm_term');
-        document.getElementById("utmContent").value = localStorage.getItem('utm_content');
     </script>
 </head>
 
@@ -45,6 +40,13 @@
         <label for="utmContent"> UTM Content </label>
         <input type="text" id="utmContent">
     </form>
+    <script>
+        document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign');
+        document.getElementById("utmSource").value = localStorage.getItem('utm_source');
+        document.getElementById("utmMedium").value = localStorage.getItem('utm_medium');
+        document.getElementById("utmTerm").value = localStorage.getItem('utm_term');
+        document.getElementById("utmContent").value = localStorage.getItem('utm_content');
+    </script>
 </body>
 
 </html>
