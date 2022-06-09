@@ -15,11 +15,11 @@
         const utmMediumValue = new URLSearchParams(urlParams).get('utm_medium');
         const utmTermValue = new URLSearchParams(urlParams).get('utm_term');
         const utmContentValue = new URLSearchParams(urlParams).get('utm_content');
-        if (utmCampaignValue) { localStorage.setItem('utm_campaign', utmCampaignValue) };
-        if (utmSourceValue) { localStorage.setItem('utm_source', utmSourceValue) };
-        if (utmMediumValue) { localStorage.setItem('utm_medium', utmMediumValue) };
-        if (utmTermValue) { localStorage.setItem('utm_term', utmTermValue) };
-        if (utmContentValue) { localStorage.setItem('utm_content', utmContentValue) };
+        if (utmCampaignValue) { localStorage.setItem('utm_campaign', utmCampaignValue) } else { localStorage.setItem('utm_campaign', '') };
+        if (utmSourceValue) { localStorage.setItem('utm_source', utmSourceValue) } else { localStorage.setItem('utm_source', '') };
+        if (utmMediumValue) { localStorage.setItem('utm_medium', utmMediumValue) } else { localStorage.setItem('utm_medium', '') };
+        if (utmTermValue) { localStorage.setItem('utm_term', utmTermValue) } else { localStorage.setItem('utm_term', '') };
+        if (utmContentValue) { localStorage.setItem('utm_content', utmContentValue) } else { localStorage.setItem('utm_content', '') };
     </script>
 </head>
 
