@@ -31,12 +31,10 @@
             const calendlyUtmContentValue = localStorage.getItem('utm_content');
             postscribe(
                 '#calendlyGeneral',
-                `<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-                <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <a href=""
+                `<a href=""
         onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue}'});return false;">Schedule
-        time with us
-    </a>`
+        time with us</a><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    `
     );
     })
     </script>
@@ -44,41 +42,25 @@
 </head>
 
 <body>
-    <!-- <script>
-        document.body.onload = function () {
-            const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign');
-            const calendlyUtmSourceValue = localStorage.getItem('utm_source');
-            const calendlyUtmMediumValue = localStorage.getItem('utm_medium');
-            const calendlyUtmTermValue = localStorage.getItem('utm_term');
-            const calendlyUtmContentValue = localStorage.getItem('utm_content');
-            const click = `Calendly.initPopupWidget({url:https://calendly.com/d/dnj-3gn-yn9?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${localStorage.utm_content}});return false;` ;
-            const this = document.querySelector('#calendyGeneral');
-            a.href = "";
-            a.onclick = click;
-        }
-    </script> -->
-    <form>
-        <label for="utmCampaign"> UTM Campaign </label>
-        <input type="text" id="utmCampaign">
-        <div class="lol"></div>
-        <label for="utmSource"> UTM Source </label>
-        <input type="text" id="utmSource">
-        <div class="lol"></div>
-        <label for="utmMedium"> UTM Medium </label>
-        <input type="text" id="utmMedium">
-        <div class="lol"></div>
-        <label for="utmTerm"> UTM Term </label>
-        <input type="text" id="utmTerm">
-        <div class="lol"></div>
-        <label for="utmContent"> UTM Content </label>
-        <input type="text" id="utmContent">
-    </form>
-    <div id="calendlyGeneral"></div>
-    <!-- Calendly link widget begin -->
-    <!-- <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <a id="calendyGeneral">Schedule time with us</a> -->
-    <!-- Calendly link widget end -->
+    <div>
+        <form>
+            <label for="utmCampaign"> UTM Campaign </label>
+            <input type="text" id="utmCampaign">
+            <div class="lol"></div>
+            <label for="utmSource"> UTM Source </label>
+            <input type="text" id="utmSource">
+            <div class="lol"></div>
+            <label for="utmMedium"> UTM Medium </label>
+            <input type="text" id="utmMedium">
+            <div class="lol"></div>
+            <label for="utmTerm"> UTM Term </label>
+            <input type="text" id="utmTerm">
+            <div class="lol"></div>
+            <label for="utmContent"> UTM Content </label>
+            <input type="text" id="utmContent">
+        </form>
+    </div>
+    <a id="calendlyGeneral"></a>
     <script>
         document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign');
         document.getElementById("utmSource").value = localStorage.getItem('utm_source');
