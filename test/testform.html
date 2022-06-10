@@ -68,8 +68,14 @@
     </script>
     <!-- ?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue} -->
 
+
     <div>
+
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+        <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
         <script type="text/javascript">
+
             $(function () {
                 const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign');
                 const calendlyUtmSourceValue = localStorage.getItem('utm_source');
@@ -81,14 +87,11 @@
                 const url = `'` + `https://calendly.com/d/dnj-3gn-yn9` + url_query + `'`;
                 postscribe(
                     '#_calendlyGeneral',
-                `
-<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-        <a href="" onclick="Calendly.initPopupWidget({url: ${url}});return false;">Schedule time
-            with us</a>
+                    `
+        <a href="" onclick="Calendly.initPopupWidget({url: ${url}});return false;">Schedule time with us</a>
         `
-        );
-        })
+                );
+            })
         </script>
     </div>
 </body>
