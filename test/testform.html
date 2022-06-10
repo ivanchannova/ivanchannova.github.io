@@ -30,11 +30,13 @@
             const calendlyUtmTermValue = localStorage.getItem('utm_term');
             const calendlyUtmContentValue = localStorage.getItem('utm_content');
             postscribe(
-                '#calendlyGeneral', 
-                `<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+                '#calendlyGeneral',
+                `<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+                <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <a href=""
-        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9?utm_campaign=${localStorage.getItem('utm_campaign')}&utm_source=${localStorage.getItem('utm_source')}'});return false;">Schedule
-        time with us</a>`
+        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue}'});return false;">Schedule
+        time with us
+    </a>`
     );
     })
     </script>
