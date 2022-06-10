@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/postscribe/2.0.8/postscribe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/postscribe/2.0.8/postscribe.min.js"></script>
     <style>
         div.lol {
             margin: 12px auto;
@@ -50,10 +50,14 @@
     </div>
 
     <!-- Calendly link widget begin -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9'});return false;">Schedule
-        time with us</a>
+
+    <div>
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+        <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+        <a href=""
+            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9'});return false;">Schedule time
+            with us</a>
+    </div>
     <!-- Calendly link widget end -->
     <script>
         document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign');
@@ -62,26 +66,28 @@
         document.getElementById("utmTerm").value = localStorage.getItem('utm_term');
         document.getElementById("utmContent").value = localStorage.getItem('utm_content'); 
     </script>
+    <!-- ?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue} -->
 
-
-
-    <script defer type="text/javascript">
-        $(function () {
-            const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign');
-            const calendlyUtmSourceValue = localStorage.getItem('utm_source');
-            const calendlyUtmMediumValue = localStorage.getItem('utm_medium');
-            const calendlyUtmTermValue = localStorage.getItem('utm_term');
-            const calendlyUtmContentValue = localStorage.getItem('utm_content');
-            postscribe(
-                '#_calendlyGeneral',
+    <div>
+        <script type="text/javascript">
+            $(function () {
+                const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign');
+                const calendlyUtmSourceValue = localStorage.getItem('utm_source');
+                const calendlyUtmMediumValue = localStorage.getItem('utm_medium');
+                const calendlyUtmTermValue = localStorage.getItem('utm_term');
+                const calendlyUtmContentValue = localStorage.getItem('utm_content');
+                postscribe(
+                    '#_calendlyGeneral',
                 `<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
                 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <a href=""
-        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue}'});return false;">Schedule
-        time with us</a>`
-    );
-    })
-    </script>
+        <a href=""
+            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9'});return false;">Schedule
+            time with us</a>
+        `
+        );
+        })
+        </script>
+    </div>
 </body>
 
 </html>
