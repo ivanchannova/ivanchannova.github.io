@@ -22,6 +22,9 @@
         if (utmContentValue) { localStorage.setItem('utm_content', utmContentValue) } else { localStorage.setItem('utm_content', '') };
     </script>
 
+</head>
+
+<body>
     <script>
         document.body.onload = function () {
             const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign');
@@ -35,10 +38,6 @@
             a.onclick = click;
         }
     </script>
-
-</head>
-
-<body>
     <form>
         <label for="utmCampaign"> UTM Campaign </label>
         <input type="text" id="utmCampaign">
