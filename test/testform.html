@@ -48,6 +48,13 @@
     <div>
         <div id="_calendlyGeneral"></div>
     </div>
+
+    <!-- Calendly link widget begin -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/d/dnj-3gn-yn9'});return false;">Schedule
+        time with us</a>
+    <!-- Calendly link widget end -->
     <script>
         document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign');
         document.getElementById("utmSource").value = localStorage.getItem('utm_source');
@@ -55,6 +62,9 @@
         document.getElementById("utmTerm").value = localStorage.getItem('utm_term');
         document.getElementById("utmContent").value = localStorage.getItem('utm_content'); 
     </script>
+
+
+
     <script defer type="text/javascript">
         $(function () {
             const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign');
