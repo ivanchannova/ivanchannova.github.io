@@ -52,7 +52,7 @@
         </form>
     </div>
     <div>
-        <div id="_calendlyGeneral"></div>
+        <div id="_calendlyPost"></div>
     </div>
 
     <!-- Calendly link widget begin -->
@@ -65,6 +65,9 @@
             with us</a>
     </div> -->
     <!-- Calendly link widget end -->
+
+
+    <!--Pull UTM values from Local Storage and put them into the corresponding fields within the form -->>
     <script>
         document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign');
         document.getElementById("utmSource").value = localStorage.getItem('utm_source');
@@ -72,8 +75,6 @@
         document.getElementById("utmTerm").value = localStorage.getItem('utm_term');
         document.getElementById("utmContent").value = localStorage.getItem('utm_content'); 
     </script>
-    <!-- ?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue} -->
-
 
     <div>
 
@@ -87,11 +88,12 @@
                 const calendlyUtmContentValue = localStorage.getItem('utm_content');
 
                 const url_query = `?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue}`;
-                const url = `'` + `https://calendly.com/d/dnj-3gn-yn9` + url_query + `'`;
+                const url = `https://calendly.com/d/dnj-3gn-yn9`;
+                const url_complete = `'` + url + url_query + `'`;
                 postscribe(
-                    '#_calendlyGeneral',
+                    '#_calendlyPost',
                     `
-        <a href="" onclick="Calendly.initPopupWidget({url: ${url}});return false;">Schedule time with us</a>
+        <a href="" onclick="Calendly.initPopupWidget({url: ${url_complete}});return false;">Schedule time with us</a>
         `
                 );
             })
