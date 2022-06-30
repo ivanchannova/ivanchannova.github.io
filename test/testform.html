@@ -87,7 +87,7 @@
                 const url_query = `?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue}&hide_event_type_details=1&hide_gdpr_banner=1`;
                 const url = `https://calendly.com/d/dnj-3gn-yn9`;
                 const url_complete = `'` + url + url_query + `'`;
-                postscribe('#_calendlyPost', `<div class="calendly-inline-widget" data-url=${url_complete} style="height:100%;"></div>`);
+                postscribe('#_calendlyPost', `<div class="calendly-inline-widget" data-url=${url_complete} style="min-height:600px;"></div>`);
             })
         </script>
     </div>
