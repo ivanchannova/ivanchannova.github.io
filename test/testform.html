@@ -25,7 +25,6 @@
         if (utmContentValue) { localStorage.setItem('utm_content', utmContentValue) } else { localStorage.setItem('utm_content', '') };
     </script>
 
-
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -52,7 +51,7 @@
         </form>
     </div>
     <div>
-        <div id="_calendlyPost"></div>
+        <div style="height:600px;" id="_calendlyPost"></div>
     </div>
 
     <!-- Calendly link widget begin -->
@@ -88,7 +87,7 @@
                 const url_query = `?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue}&hide_event_type_details=1&hide_gdpr_banner=1`;
                 const url = `https://calendly.com/d/dnj-3gn-yn9`;
                 const url_complete = `'` + url + url_query + `'`;
-                postscribe('#_calendlyPost', `<div class="calendly-inline-widget" data-url=${url_complete}></div>`);
+                postscribe('#_calendlyPost', `<div class="calendly-inline-widget" data-url=${url_complete} style="height:100%;"></div>`);
             })
         </script>
     </div>
