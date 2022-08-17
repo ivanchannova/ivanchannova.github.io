@@ -48,6 +48,8 @@
             <div class="lol"></div>
             <label for="utmContent"> UTM Content </label>
             <input type="text" id="utmContent">
+            <label for="jobPosition"> Job Position </label>
+            <input id="jobPosition" name="jobPosition">
         </form>
     </div>
     <div>
@@ -66,24 +68,28 @@
     <!-- Calendly link widget end -->
 
 
-    <!--Pull UTM values from Local Storage and put them into the corresponding fields within the form -->>
+    <!--Pull UTM values from Local Storage and put them into the corresponding fields within the form -->
     <script>
-        document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign');
-        document.getElementById("utmSource").value = localStorage.getItem('utm_source');
-        document.getElementById("utmMedium").value = localStorage.getItem('utm_medium');
-        document.getElementById("utmTerm").value = localStorage.getItem('utm_term');
-        document.getElementById("utmContent").value = localStorage.getItem('utm_content'); 
+        if (localStorage.getItem('utm_campaign')) { document.getElementById("utmCampaign").value = localStorage.getItem('utm_campaign'); }
+        if (localStorage.getItem('utm_source')) { document.getElementById("utmSource").value = localStorage.getItem('utm_source'); }
+        if (localStorage.getItem('utm_medium')) { document.getElementById("utmMedium").value = localStorage.getItem('utm_medium'); }
+        if (localStorage.getItem('utm_term')) { document.getElementById("utmTerm").value = localStorage.getItem('utm_term'); }
+        if (localStorage.getItem('utm_content')) { document.getElementById("utmContent").value = localStorage.getItem('utm_content'); }
+        // document.getElementById("utmSource").value = localStorage.getItem('utm_source');
+        // document.getElementById("utmMedium").value = localStorage.getItem('utm_medium');
+        // document.getElementById("utmTerm").value = localStorage.getItem('utm_term');
+        // document.getElementById("utmContent").value = localStorage.getItem('utm_content'); 
     </script>
 
     <div>
 
         <script type="text/javascript">
             $(function () {
-                const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign');
-                const calendlyUtmSourceValue = localStorage.getItem('utm_source');
-                const calendlyUtmMediumValue = localStorage.getItem('utm_medium');
-                const calendlyUtmTermValue = localStorage.getItem('utm_term');
-                const calendlyUtmContentValue = localStorage.getItem('utm_content');
+                const calendlyUtmCampaignValue = localStorage.getItem('utm_campaign') ?? '';
+                const calendlyUtmSourceValue = localStorage.getItem('utm_source') ?? '';
+                const calendlyUtmMediumValue = localStorage.getItem('utm_medium') ?? '';
+                const calendlyUtmTermValue = localStorage.getItem('utm_term') ?? '';
+                const calendlyUtmContentValue = localStorage.getItem('utm_content') ?? '';
                 const url_query = `?utm_campaign=${calendlyUtmCampaignValue}&utm_source=${calendlyUtmSourceValue}&utm_medium=${calendlyUtmMediumValue}&utm_term=${calendlyUtmTermValue}&utm_content=${calendlyUtmContentValue}&hide_event_type_details=1&hide_gdpr_banner=1`;
                 const url = `https://calendly.com/d/dnj-3gn-yn9`;
                 const url_complete = `'` + url + url_query + `'`;
@@ -91,6 +97,14 @@
             })
         </script>
     </div>
+
+    <script>
+        const urlParam = window.location.search;
+        const jobPositionValue = new URLSearchParams(urlParam).get('id');
+        document.getElementById("jobPosition").value = jobPositionValue;
+    </script>
+
+
 </body>
 
 </html>
