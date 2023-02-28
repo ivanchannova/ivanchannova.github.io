@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<!-- Credit to Chanjiang Yang for the canvas script
+https://github.com/yangcha/iview
+-->
+<html>
+
+<head>
+    <style>
+        div.footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            margin: 0 auto;
+            background: #4D266C;
+            color: #fff;
+        }
+
+        div.lol {
+            margin: 12px auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p>Open image: <input type="file" id="inputImage" /></p>
+
+    <div>
+        X-Coordinate: <input id="xcoord" type="text" readonly="true" name="xcoord" /> <br>
+        Y-Coordinate: <input id="ycoord" type="text" readonly="true" name="ycoord" /> <br>
+    </div>
+
+    <canvas id="canvas" style="margin:12px;"></canvas>
+
+    <div class="footer" id="results">Move mouse over image to show mouse location and pixel value</div>
+
+    <script>
+        var URL = window.URL;
+        var cvs = document.getElementById('canvas');
+        var ctx = cvs.getContext('2d');
+        var res = document.getElementById('results');
+        var count = 0;
+
+        cvs.addEventListener('mousemove', mousePos, false);
+        cvs.addEventListener('click', copyMousePos, false);
+
+        window.onload = function () {
+            var inputImage = document.getElementById('inputImage');
+            var fileDiv = document.getElementById('file');
+            inputImage.addEventListener('change', handleImageFiles, false);
+            file.style.visibility = "hidden";
+        }
+
+        function copyMousePos(evt) {
+            var rect = cvs.getBoundingClientRect();
+            var x = parseInt(evt.clientX - rect.left);
+            var y = parseInt(evt.clientY - rect.top);
+            var name = document.getElementById("currentItemName").value;
+            var storeValue = document.getElementById("store").value;
+            var storeId = document.getElementById("store");
+            copyText = x + ',' + y
+            navigator.clipboard.writeText(copyText).then(function () {
+                console.log('ok')
+            }, function () {
+                console.log('')
+            });
+            storeId.value = storeValue + name + ',' + count + ',' + x + ',' + y + '~~';
+            count = count + 1;
+            document.getElementById("xcoord").value = x;
+            document.getElementById("ycoord").value = y;
+        }
+
+        function mousePos(evt) {
+            var rect = cvs.getBoundingClientRect();
+            var x = parseInt(evt.clientX - rect.left);
+            var y = parseInt(evt.clientY - rect.top);
+            var p = ctx.getImageData(x, y, 1, 1).data;
+            results.innerHTML = '<table style="width:100%;table-layout:fixed"><td>X: '
+                + x + '</td><td>Y: ' + y + '</td><td>Red: '
+                + p[0] + '</td><td>Green: ' + p[1] + '</td><td>Blue: '
+                + p[2] + '</td><td>Alpha: ' + p[3] + "</td></table>";
+            return { x, y };
+        }
+
+        function displayOutput() {
+            var parseStore = document.getElementById("store").value;
+            var outputTo = document.getElementById('output');
+            var fileDiv = document.getElementById('file');
+            parseStore = parseStore.replaceAll('~~', '\n');
+            outputTo.value = 'Name,Path,X,Y\n' + parseStore;
+            file.style.visibility = "visible";
+        }
+
+        function download() {
+            var pom = document.createElement('a');
+            var filename = document.getElementById("fileName").value;
+            var text = document.getElementById("output").value;
+            filename = filename + '.csv'
+            pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            pom.setAttribute('download', filename);
+            pom.style.display = 'none';
+            document.body.appendChild(pom);
+            pom.click();
+            document.body.removeChild(pom);
+        }
+
+        function handleImageFiles(e) {
+            var url = URL.createObjectURL(e.target.files[0]);
+            var img = new Image();
+            img.onload = function () {
+                cvs.width = img.width;
+                cvs.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            }
+            img.src = url;
+        }
+
+        function resetCount() {
+            count = 0;
+        }
+
+    </script>
+</body>
+
+</html>
