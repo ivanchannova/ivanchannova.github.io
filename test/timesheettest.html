@@ -37,6 +37,21 @@
 
     </div>
 
+
+    <script>
+        const queryString = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        })
+        const staff = queryString.staff;
+        if (staff) {
+            const staffNameArray = staff.split("_");
+            console.log(staffNameArray[0]);
+            console.log(staffNameArray[1]);
+            const staffName = staffNameArray.join(" ");
+            document.getElementById("name").value = staffName;
+        }
+    </script>
+
     <script>
         const form = document.getElementById("info-group");
         form.addEventListener("submit", (e) => {
