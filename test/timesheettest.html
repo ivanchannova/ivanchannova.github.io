@@ -30,7 +30,7 @@
         <label for="name">Name: </label>
         <input name="name" id="name" type="text" />
         <label for="name">Date: </label>
-        <input name="name" id="name" type="date" />
+        <input name="name" id="date" type="date" />
         <button type="submit" id="submit">Submit</button>
     </form>
     <div id="timesheet-table">
@@ -42,7 +42,7 @@
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             const nameValue = document.getElementById("name").value;
-            const dateValue = document.getElementById("name").value;
+            const dateValue = document.getElementById("date").value;
             postWebhook(nameValue, dateValue)
         })
     </script>
@@ -55,8 +55,8 @@
                 "name": namePush,
                 "date": datePush
             };
-            request.open("POST", url, true);
-            request.setRequestHeader('Content-type', 'application/json');
+            request.open("POST", url);
+            request.withCredentials = false;
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200) {
                     alert(request.responseText);
