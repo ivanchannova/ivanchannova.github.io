@@ -42,7 +42,7 @@
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             const nameValue = document.getElementById("name").value;
-            const dateValue = document.getElementById("name").value;
+            const dateValue = document.getElementById("date").value;
             postWebhook(nameValue, dateValue)
         })
     </script>
@@ -55,7 +55,7 @@
                 "name": namePush,
                 "date": datePush
             };
-            request.open("POST", url, true);
+            request.open("POST", url);
             request.setRequestHeader('Content-type', 'application/json');
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200) {
@@ -65,7 +65,7 @@
             try {
                 request.send(JSON.stringify(body));
             } catch (err) {
-                alert(err);
+                console.log(err);
             }
         }
     </script>
