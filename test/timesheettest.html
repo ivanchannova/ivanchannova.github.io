@@ -49,14 +49,15 @@
 
     <script>
         function postWebhook(namePush, datePush) {
-            var request = new XMLHttpRequest();
-            request.open("POST", "https://hooks.zapier.com/hooks/catch/4265169/3olh63w/");
-            request.setRequestHeader('Content-type', 'application/json');
-            var params = {
-                name: namePush,
-                date: datePush
+            const request = new XMLHttpRequest();
+            const url = "https://hooks.zapier.com/hooks/catch/4265169/3olh63w/";
+            var content = {
+                "name": namePush,
+                "date": datePush
             }
-            request.send(JSON.stringify(params));
+            request.open("POST", url, true);
+            request.setRequestHeader('Content-type', 'application/json');
+            request.send(JSON.stringify(content));
         }
     </script>
 
