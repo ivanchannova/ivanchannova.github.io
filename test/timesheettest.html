@@ -62,7 +62,11 @@
                     alert(request.responseText);
                 }
             }
-            request.send(JSON.stringify(body));
+            try {
+                request.send(JSON.stringify(body));
+            } catch (err) {
+                alert(err);
+            }
         }
     </script>
 
