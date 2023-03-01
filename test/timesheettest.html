@@ -51,7 +51,7 @@
         function postWebhook(namePush, datePush) {
             const request = new XMLHttpRequest();
             const url = "https://hooks.zapier.com/hooks/catch/4265169/3olh63w/";
-            var content = {
+            const body = {
                 "name": namePush,
                 "date": datePush
             };
