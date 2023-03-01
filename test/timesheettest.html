@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NOVA Timesheet</title>
+    <meta property="og:image" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NOVA Timesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Montserrat';
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        input {
+            margin-right: 5%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        NOVA Timesheet
+    </h1>
+    <form id="info-group" action="https://hooks.zapier.com/hooks/catch/4265169/3olh63w/" method="POST">
+        <label for="name">Name: </label>
+        <input name="name" id="name" type="text" />
+        <label for="name">Date: </label>
+        <input name="name" id="name" type="date" />
+        <input type="submit" id="submit" />
+    </form>
+    <div id="timesheet-table">
+
+    </div>
+    <!-- <script>
+        const getSubmitButton = document.getElementById('submit');
+        const getName = document.getElementById('name');
+        const getDate = document.getElementById('date');
+        const getResponse = document.getElementById('response');
+        fetch('https://hooks.zapier.com/hooks/catch/4265169/3olh63w/', {
+            method: 'POST',
+            body: new URLSearchParams({
+                name: getName.value,
+                date: date.value
+            })
+        })
+            .then(response => {
+                document.getElementById('response').value = response;
+            })
+    </script> -->
+</body>
+
+</html>
