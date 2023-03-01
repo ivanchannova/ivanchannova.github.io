@@ -26,32 +26,40 @@
     <h1>
         NOVA Timesheet
     </h1>
-    <form id="info-group" action="https://hooks.zapier.com/hooks/catch/4265169/3olh63w/" method="POST">
+    <form id="info-group" action="">
         <label for="name">Name: </label>
         <input name="name" id="name" type="text" />
         <label for="name">Date: </label>
         <input name="name" id="name" type="date" />
-        <input type="submit" id="submit" />
+        <button type="submit" id="submit">Submit</button>
     </form>
     <div id="timesheet-table">
 
     </div>
-    <!-- <script>
-        const getSubmitButton = document.getElementById('submit');
-        const getName = document.getElementById('name');
-        const getDate = document.getElementById('date');
-        const getResponse = document.getElementById('response');
-        fetch('https://hooks.zapier.com/hooks/catch/4265169/3olh63w/', {
-            method: 'POST',
-            body: new URLSearchParams({
-                name: getName.value,
-                date: date.value
-            })
+
+    <script>
+        const form = document.getElementById("info-group");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nameValue = document.getElementById("name").value;
+            const dateValue = document.getElementById("name").value;
+            postWebhook(nameValue, dateValue)
         })
-            .then(response => {
-                document.getElementById('response').value = response;
-            })
-    </script> -->
+    </script>
+
+    <script>
+        function postWebhook(namePush, datePush) {
+            var request = new XMLHttpRequest();
+            request.open("POST", "https://hooks.zapier.com/hooks/catch/4265169/3olh63w/");
+            request.setRequestHeader('Content-type', 'application/json');
+            var params = {
+                name: namePush,
+                date: datePush
+            }
+            request.send(JSON.stringify(params));
+        }
+    </script>
+
 </body>
 
 </html>
