@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>NOVA</title>
+    <title>NOVA Timesheet</title>
     <meta property="og:image" content="">
     <meta property="og:type" content="website">
     <meta property="og:title" content="NOVA Timesheet">
@@ -41,7 +41,7 @@
             <th>Task</th>
             <th>Hour Spent</th>
             <th>Description</th>
-            <th>...</th>
+            <!-- <th>...</th> -->
         </table>
 
         <button onclick="addRow()" id="addRowButton" type="button">Add Row</button>
@@ -58,30 +58,59 @@
             const cell2 = document.createElement('td');
             const cell3 = document.createElement('td');
             const cell4 = document.createElement('td');
-            const cell5 = document.createElement('td');
+            // const cell5 = document.createElement('td');
 
-            const optionList = [
+            const row1OptionList = [
                 '<option value="yx_community">Y.X Community</option>',
+                '<option value="ccg_groupcrm_cm">CCG Group CRM - Central Market</option>',
+                '<option value="ccg_groupcrm_lpsfb">CCG Group CRM - LP&SFB</option>',
+                '<option value="slowood">Slowood</option>',
+                '<option value="vbiz">Vbiz</option>',
+                '<option value="lpsfb">LP&SFB</option>',
                 '<option value="cm">Central Market</option>',
+                '<option value="tatcha">Tatcha</option>',
+                '<option value="internal">Internal System</option>',
+                '<option value="other">Other</option>',
             ]
-            const options = optionList.join("");
+            const row1Options = row1OptionList.join("");
 
-            cell1.innerHTML = '<input type="text" name="row1" id="row1" />';
-            cell2.innerHTML = '<select name="row2" id="' + currentRowIndex + '">' + options + '</select>';
-            cell3.innerHTML = "Cell3";
-            cell4.innerHTML = "Cell4";
-            cell5.innerHTML = "Cell5";
+            const row2OptionList = [
+                '<option value="development">Development</option>',
+                '<option value="pm_comm_doc">Project Management, Communication & Documentation</option>',
+                '<option value="qa">Quality Assurance</option>',
+                '<option value="after_launch_support">After-Live Support</option>',
+                '<option value="presales">Pre-sales Activities (Quote, Demo, Meetings)</option>',
+                '<option value="other">Others (specify in Description)</option>'
+            ]
+            const row2Options = row2OptionList.join("");
+
+            cell1Id = "cell1-" + currentRowIndex;
+            cell2Id = "cell2-" + currentRowIndex;
+            cell3Id = "cell3-" + currentRowIndex;
+            cell4Id = "cell4-" + currentRowIndex;
+            // cell5Id = "cell5-" + currentRowIndex;
+            rowCount = currentRowIndex + 1;
+
+            cell1.innerHTML = '<select name="cell1" id="' + cell1Id + '">' + row1Options + '</select>';
+            cell2.innerHTML = '<select name="cell2" id="' + cell2Id + '">' + row2Options + '</select>';
+            cell3.innerHTML = '<input name="cell3" id="' + cell3Id + '" type="number" />';
+            cell4.innerHTML = '<input name="cell4" id="' + cell4Id + '" type="text" />';
+            // cell5.innerHTML = '<button onclick="rowRemoval(' + rowCount + ')" id="' + cell5Id + '" type="button">Delete</button>';
 
             row.appendChild(cell1);
             row.appendChild(cell2);
             row.appendChild(cell3);
             row.appendChild(cell4);
-            row.appendChild(cell5);
+            // row.appendChild(cell5);
             table.appendChild(row);
-            console.log("Current Row Index: " + row.rowIndex);
             globalThis.currentRowIndex = row.rowIndex;
             document.getElementById("finalRowIndex").value = row.rowIndex;
         }
+
+        function rowRemoval(rowNumber) {
+            document.getElementById('timesheet').deleteRow(rowNumber);
+        }
+
     </script>
 
     <!-- Default the date field as today -->
@@ -126,26 +155,48 @@
             const dateValue = document.getElementById("date").value;
             const submitDateTimeValue = submissionDateTime();
             const finalRowIndexValue = document.getElementById("finalRowIndex").value;
+            const proj = new Array();
+            const task = new Array();
+            const hours = new Array();
+            const description = new Array();
+
+            for (let i = 0; i < currentRowIndex; i++) {
+                cell1Id = "cell1-" + i;
+                cell2Id = "cell2-" + i;
+                cell3Id = "cell3-" + i;
+                cell4Id = "cell4-" + i;
+
+                proj[i] = document.getElementById(cell1Id).value;
+                task[i] = document.getElementById(cell2Id).value;
+                hours[i] = document.getElementById(cell3Id).value;
+                description[i] = document.getElementById(cell4Id).value;
+                // console.log("Project " + i + ": " + proj[i]);
+            }
+
             if (nameValue && dateValue && finalRowIndexValue) {
-                postWebhook(nameValue, dateValue, submitDateTimeValue, finalRowIndexValue);
+                postWebhook(nameValue, dateValue, submitDateTimeValue, finalRowIndexValue, proj, task, hours, description);
             } else {
                 alert("Please enter your Name and the Date, or add a row. ");
             }
         };
 
-        function postWebhook(namePush, datePush, submitPush, rowIndexPush) {
+        function postWebhook(namePush, datePush, submitPush, rowIndexPush, projPush, taskPush, hoursPush, descriptionPush) {
             const request = new XMLHttpRequest();
             const url = "https://hooks.zapier.com/hooks/catch/4265169/3olh63w/";
             const body = {
                 "name": namePush,
                 "date": datePush,
                 "submissionDateTime": submitPush,
-                "rowIndex": rowIndexPush
+                "rowIndex": rowIndexPush,
+                "projects": projPush,
+                "tasks": taskPush,
+                "hours": hoursPush,
+                "descriptions": descriptionPush
             };
             request.open("POST", url);
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200) {
-                    //Add redirect logic here
+                    location.replace("https://ivanchannova.github.io/test/timesheettestsuccess.html");
                 } else {
                 }
             }
