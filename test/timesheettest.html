@@ -99,10 +99,10 @@
             // cell5Id = "cell5-" + currentRowIndex;
             rowCount = currentRowIndex + 1;
 
-            cell1.innerHTML = '<select name="cell1" id="' + cell1Id + '">' + row1Options + '</select>';
-            cell2.innerHTML = '<select name="cell2" id="' + cell2Id + '">' + row2Options + '</select>';
-            cell3.innerHTML = '<input name="cell3" id="' + cell3Id + '" type="number" />';
-            cell4.innerHTML = '<input name="cell4" id="' + cell4Id + '" type="text" />';
+            cell1.innerHTML = '<select name="cell1" id="' + cell1Id + '" required>' + row1Options + '</select>';
+            cell2.innerHTML = '<select name="cell2" id="' + cell2Id + '" required>' + row2Options + '</select>';
+            cell3.innerHTML = '<input name="cell3" id="' + cell3Id + '" type="number" required/>';
+            cell4.innerHTML = '<input name="cell4" id="' + cell4Id + '" type="text" required/>';
             // cell5.innerHTML = '<button onclick="rowRemoval(' + rowCount + ')" id="' + cell5Id + '" type="button">Delete</button>';
 
             row.appendChild(cell1);
@@ -190,7 +190,10 @@
 
         function postWebhook(namePush, datePush, submitPush, rowIndexPush, projPush, taskPush, hoursPush, descriptionPush) {
             const request = new XMLHttpRequest();
-            const url = "https://hooks.zapier.com/hooks/catch/4265169/3olh63w/";
+            // const url = "https://hooks.zapier.com/hooks/catch/4265169/3olh63w/";
+            const url = "https://hooks.zapier.com/hooks/catch/4265169/3b33830/";
+            const successName = namePush.replace(" ", "_");
+            const successURL = "https://ivanchannova.github.io/test/timesheettestsuccess.html?staff=" + successName;
             const body = {
                 "name": namePush,
                 "date": datePush,
@@ -204,7 +207,7 @@
             request.open("POST", url);
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200) {
-                    location.replace("https://ivanchannova.github.io/test/timesheettestsuccess.html");
+                    location.replace(successURL);
                 } else {
                 }
             }
