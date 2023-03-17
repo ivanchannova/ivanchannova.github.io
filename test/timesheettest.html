@@ -61,7 +61,7 @@
             const cell4 = document.createElement('td');
             // const cell5 = document.createElement('td');
 
-            const row1OptionList = [
+            const projectOptionList = [
                 '<option value="yx_community">Y.X Community</option>',
                 '<option value="ccg_groupcrm">CCG Group CRM</option>',
                 '<option value="slowood">Slowood</option>',
@@ -76,11 +76,12 @@
                 '<option value="cm">Central Market</option>',
                 '<option value="tatcha">Tatcha</option>',
                 '<option value="internal">Internal System</option>',
+                '<option value="bd">BD</option>',
                 '<option value="other">Others (specify in Description)</option>',
             ]
-            const row1Options = row1OptionList.join("");
+            const row1Options = projectOptionList.join("");
 
-            const row2OptionList = [
+            const taskOptionList = [
                 '<option value="dev_config">Development & Configuration</option>',
                 '<option value="pm">Project Management</option>',
                 '<option value="doc">Documentation</option>',
@@ -92,7 +93,7 @@
                 '<option value="presales">Pre-sales Activities (Quote, Demo, Meetings)</option>',
                 '<option value="other">Others (specify in Description)</option>'
             ]
-            const row2Options = row2OptionList.join("");
+            const row2Options = taskOptionList.join("");
 
             cell1Id = "cell1-" + currentRowIndex;
             cell2Id = "cell2-" + currentRowIndex;
