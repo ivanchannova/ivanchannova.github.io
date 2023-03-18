@@ -12,6 +12,8 @@
     <style>
         body {
             font-family: 'Montserrat';
+            text-align: center;
+            font-weight: bold;
         }
 
         h1 {
@@ -20,33 +22,50 @@
 
         input {
             font-family: 'Noto Sans';
-            margin-right: 5%;
+        }
+
+        input.number {
+            width: 90px;
+        }
+
+        table {
+            width: 80%;
+        }
+
+        .center {
+            display: inline-block;
         }
     </style>
 </head>
 
-<body>
-    <h1>
-        NOVA
-    </h1>
-    <form id="info-group" action="">
-        <label for="name">Name: </label>
-        <input name="name" id="name" type="text" />
-        <label for="name">Date: </label>
-        <input name="date" id="date" type="date" />
-        <input name="submit-date-time" id="submit-date-time" type="text" readonly="true" hidden="true" />
+<body onload="addRow()">
+    <div class="center">
 
-        <table id="timesheet">
-            <th>Project</th>
-            <th>Task</th>
-            <th>Hour Spent</th>
-            <th>Description</th>
-            <th>...</th>
-        </table>
+        <h1>
+            NOVA
+        </h1>
+
+        <div>
+            <label for="name">Name: </label>
+            <input name="name" id="name" type="text" />
+            <label for="name">Date: </label>
+            <input name="date" id="date" type="date" />
+            <input name="submit-date-time" id="submit-date-time" type="text" readonly="true" hidden="true" />
+        </div>
+
+        <div style="overflow-x:auto;">
+            <table id="timesheet">
+                <th id="header-project">Project</th>
+                <th id="header-task">Task</th>
+                <th id="header-hour">Hour Spent</th>
+                <th id="header-description">Description</th>
+                <th id="header-function">...</th>
+            </table>
+        </div>
 
         <button onclick="addRow()" id="addRowButton" type="button">Add Row</button>
         <button onclick="submitForm()" id="submitButton" type="button">Submit</button>
-    </form>
+    </div>
 
     <!-- Add row to the timesheet table -->
     <script>
@@ -62,6 +81,7 @@
             const cell5 = document.createElement('td');
 
             const projectOptionList = [
+                '<option value=""></option>',
                 '<option value="yx_community">Y.X Community</option>',
                 '<option value="ccg_groupcrm">CCG Group CRM</option>',
                 '<option value="slowood">Slowood</option>',
@@ -83,6 +103,7 @@
             const row1Options = projectOptionList.join('');
 
             const taskOptionList = [
+                '<option value=""></option>',
                 '<option value="dev_config">Development & Configuration</option>',
                 '<option value="pm">Project Management</option>',
                 '<option value="doc">Documentation</option>',
@@ -104,8 +125,8 @@
 
             cell1.innerHTML = '<select name="cell1" id="' + cell1Id + '">' + row1Options + '</select>';
             cell2.innerHTML = '<select name="cell2" id="' + cell2Id + '">' + row2Options + '</select>';
-            cell3.innerHTML = '<input name="cell3" id="' + cell3Id + '" type="number" />';
-            cell4.innerHTML = '<input name="cell4" id="' + cell4Id + '" type="text" />';
+            cell3.innerHTML = '<input name="cell3" id="' + cell3Id + '" type="number" class="number"/>';
+            cell4.innerHTML = '<input name="cell4" id="' + cell4Id + '" type="text" class="text"/>';
             cell5.innerHTML = '<button onclick="removeRow(this)" id="' + cell5Id + '" type="button">Delete</button>';
 
             row.appendChild(cell1);
@@ -176,6 +197,7 @@
             const task = new Array();
             const hours = new Array();
             const description = new Array();
+            var tableValid = true;
 
             for (let i = 0; i < currentRowIndex; i++) {
                 cell1Id = "cell1-" + i;
@@ -191,18 +213,32 @@
                 };
             }
 
-            if (nameValue && dateValue && finalRowIndexValue) {
-                postWebhook(nameValue, dateValue, submitDateTimeValue, finalRowIndexValue, proj, task, hours, description);
-                // console.log("Name: " + nameValue);
-                // console.log("Date: " + dateValue);
-                // console.log("Submit Date Time: " + submitDateTimeValue);
-                // console.log("Final Row Index: " + finalRowIndexValue);
-                // console.log("Projects: " + proj);
-                // console.log("Tasks: " + task);
-                // console.log("Hours: " + hours);
-                // console.log("Description: " + description);
+            if (proj.some(item => item === "")) {
+                tableValid = false;
+            } else if (task.some(item => item === "")) {
+                tableValid = false;
+            } else if (hours.some(item => item === "")) {
+                tableValid = false;
+            } else if (description.some(item => item === "")) {
+                tableValid = false;
+            };
+
+            if (tableValid) {
+                if (nameValue && dateValue && finalRowIndexValue) {
+                    // postWebhook(nameValue, dateValue, submitDateTimeValue, finalRowIndexValue, proj, task, hours, description);
+                    console.log("Name: " + nameValue);
+                    console.log("Date: " + dateValue);
+                    console.log("Submit Date Time: " + submitDateTimeValue);
+                    console.log("Final Row Index: " + finalRowIndexValue);
+                    console.log("Projects: " + proj);
+                    console.log("Tasks: " + task);
+                    console.log("Hours: " + hours);
+                    console.log("Description: " + description);
+                } else {
+                    alert("Please enter your Name and the Date, or add a row. ");
+                }
             } else {
-                alert("Please enter your Name and the Date, or add a row. ");
+                alert("Please fill out the table properly");
             }
         };
 
