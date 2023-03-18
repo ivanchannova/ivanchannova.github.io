@@ -225,15 +225,15 @@
 
             if (tableValid) {
                 if (nameValue && dateValue && finalRowIndexValue) {
-                    // postWebhook(nameValue, dateValue, submitDateTimeValue, finalRowIndexValue, proj, task, hours, description);
-                    console.log("Name: " + nameValue);
-                    console.log("Date: " + dateValue);
-                    console.log("Submit Date Time: " + submitDateTimeValue);
-                    console.log("Final Row Index: " + finalRowIndexValue);
-                    console.log("Projects: " + proj);
-                    console.log("Tasks: " + task);
-                    console.log("Hours: " + hours);
-                    console.log("Description: " + description);
+                    postWebhook(nameValue, dateValue, submitDateTimeValue, finalRowIndexValue, proj, task, hours, description);
+                    // console.log("Name: " + nameValue);
+                    // console.log("Date: " + dateValue);
+                    // console.log("Submit Date Time: " + submitDateTimeValue);
+                    // console.log("Final Row Index: " + finalRowIndexValue);
+                    // console.log("Projects: " + proj);
+                    // console.log("Tasks: " + task);
+                    // console.log("Hours: " + hours);
+                    // console.log("Description: " + description);
                 } else {
                     alert("Please enter your Name and the Date, or add a row. ");
                 }
