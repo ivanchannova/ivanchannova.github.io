@@ -35,7 +35,6 @@
         <label for="name">Date: </label>
         <input name="date" id="date" type="date" />
         <input name="submit-date-time" id="submit-date-time" type="text" readonly="true" hidden="true" />
-        <input name="finalRowIndex" id="finalRowIndex" type="number" readonly="true" hidden="true" />
 
         <table id="timesheet">
             <th>Project</th>
@@ -116,9 +115,7 @@
             row.appendChild(cell5);
             table.appendChild(row);
             rowIndexArray.push(currentRowIndex);
-            console.log("Row Index Array: " + rowIndexArray);
             globalThis.currentRowIndex = row.rowIndex;
-            document.getElementById('finalRowIndex').value = row.rowIndex;
         }
 
         function removeRow(buttonRow) {
@@ -174,7 +171,7 @@
             const nameValue = document.getElementById("name").value;
             const dateValue = document.getElementById("date").value;
             const submitDateTimeValue = submissionDateTime();
-            const finalRowIndexValue = document.getElementById("finalRowIndex").value;
+            const finalRowIndexValue = rowIndexArray.length;
             const proj = new Array();
             const task = new Array();
             const hours = new Array();
@@ -191,8 +188,7 @@
                     task.push(document.getElementById(cell2Id).value);
                     hours.push(document.getElementById(cell3Id).value);
                     description.push(document.getElementById(cell4Id).value);
-                }
-                // console.log("Project " + i + ": " + proj[i]);
+                };
             }
 
             if (nameValue && dateValue && finalRowIndexValue) {
