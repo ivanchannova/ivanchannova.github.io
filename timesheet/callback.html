@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>OAuth2 Callback</title>
+  </head>
+  <body>
+    <script>
+      // This script reads the access token from the URL hash and sends it back to the parent window
+      var accessToken = window.location.hash.substr(1);
+      window.opener.postMessage(accessToken, window.location.origin);
+      window.close();
+    </script>
+  </body>
+</html>
