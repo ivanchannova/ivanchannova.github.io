@@ -25,7 +25,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById("responseField").value = JSON.stringify(data);
+                    document.getElementById("responseField").value = data.answer;
                 })
                 .catch(error => console.error(error));
         }
