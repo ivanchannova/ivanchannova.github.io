@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NOVA KB V1</title>
+</head>
+
+<body>
+    <h1>NOVA API Knowledge Base Request v1</h1>
+    <label for="inputField">Input Value:</label>
+    <input type="text" id="inputField"><br><br>
+    <button onclick="sendRequest()">Send Request</button><br><br>
+    <label for="responseField">API Response:</label>
+    <textarea id="responseField" rows="10" cols="50" readonly></textarea>
+    <script>
+        function sendRequest() {
+            let inputValue = document.getElementById("inputField").value;
+            let bodyValue = `{"question": ` + JSON.stringify(inputValue) + `}`;
+            fetch("https://mcej8glxm6.execute-api.ap-northeast-1.amazonaws.com/chat/query", {
+                method: "POST",
+                body: bodyValue,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("responseField").value = JSON.stringify(data);
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
+</body>
+
+</html>
