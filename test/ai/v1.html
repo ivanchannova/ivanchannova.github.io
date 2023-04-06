@@ -17,6 +17,9 @@
         function sendRequest() {
             let inputValue = document.getElementById("inputField").value;
             let bodyValue = `{"question": ` + JSON.stringify(inputValue) + `}`;
+
+            document.getElementById("responseField").value = "Loading...";
+
             fetch("https://mcej8glxm6.execute-api.ap-northeast-1.amazonaws.com/chat/query", {
                 method: "POST",
                 body: bodyValue,
