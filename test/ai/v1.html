@@ -8,10 +8,11 @@
 <body>
     <h1>NOVA API Knowledge Base Request v1</h1>
     <label for="inputField">Input Value:</label>
-    <input type="text" id="inputField" style="width: 50%"><br><br>
-    <button onclick="sendRequest()">Send Request</button><br><br>
+    <input type="text" id="inputField" style="width: 80%"><br><br>
+    <button onclick="sendRequest()">Send Request</button>
+    <button onclick="clearFields()">Clear</button><br><br>
     <label for="responseField">API Response:</label>
-    <textarea id="responseField" rows="10" cols="50" style="width: 50%" readonly></textarea>
+    <textarea id="responseField" rows="10" cols="50" style="width: 58%" readonly></textarea>
     <script>
         function sendRequest() {
             let inputValue = document.getElementById("inputField").value;
@@ -28,6 +29,12 @@
                     document.getElementById("responseField").value = data.data.answer;
                 })
                 .catch(error => console.error(error));
+        }
+    </script>
+    <script>
+        function clearFields() {
+            document.getElementById("inputField").value = "";
+            document.getElementById("responseField").value = "";
         }
     </script>
 </body>
