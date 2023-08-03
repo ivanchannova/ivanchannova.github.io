@@ -179,6 +179,9 @@
             staffNameArray.forEach(arrayFirstCharToUppercase);
             const staffName = staffNameArray.join(" ");
             document.getElementById("name").value = staffName;
+            localStorage.setItem("staffName", staffName);
+        } else if (localStorage.getItem("staffName")) {
+            document.getElementById("name").value = localStorage.getItem("staffName");
         }
         function arrayFirstCharToUppercase(item, index, arr) {
             let itemArray = item.split("");
