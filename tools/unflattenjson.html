@@ -16,10 +16,12 @@
         document.getElementById('fileInput').addEventListener('change', readFile);
 
         let jsonData = {};
+        let fileName = 'unflattened.json';
 
         function readFile(event) {
             const file = event.target.files[0];
             if (file) {
+                fileName = file.name.split('.').slice(0, -1).join('.') + '(unflattened).json';
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     try {
@@ -34,34 +36,38 @@
 
         function processFile() {
             const unflattened = unflatten(jsonData);
-            downloadJSON(unflattened);
+            downloadJSON(unflattened, fileName);
         }
 
         function unflatten(data) {
             const result = {};
 
             for (let key in data) {
-                const keys = key.split('.');
-                keys.reduce((acc, val, i) => {
-                    if (i === keys.length - 1) {
-                        acc[val] = data[key];
-                    } else {
-                        acc[val] = acc[val] || {};
-                    }
-                    return acc[val];
-                }, result);
+                if (key.includes('.')) {
+                    const keys = key.split('.');
+                    keys.reduce((acc, val, i) => {
+                        if (i === keys.length - 1) {
+                            acc[val] = data[key];
+                        } else {
+                            acc[val] = acc[val] || {};
+                        }
+                        return acc[val];
+                    }, result);
+                } else {
+                    result[key] = data[key];
+                }
             }
 
             return result;
         }
 
-        function downloadJSON(jsonData) {
+        function downloadJSON(jsonData, fileName) {
             const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = 'unflattened.json';
+            a.download = fileName;
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
