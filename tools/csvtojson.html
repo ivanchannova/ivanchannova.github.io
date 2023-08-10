@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unflatten JSON/CSV</title>
+</head>
+
+<body>
+    <input type="file" id="upload" />
+    <button onclick="processFile()">Process and View</button>
+    <button onclick="downloadUnflattened()">Download Processed Data</button>
+    <pre id="output"></pre>
+
+    <script>
+        let globalUnflattenedData = null;
+        let globalFileName = '';
+
+        function processFile() {
+            const fileInput = document.getElementById('upload');
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const content = event.target.result;
+                const fileName = fileInput.files[0].name;
+
+                if (fileName.endsWith('.json')) {
+                    const flattenedData = JSON.parse(content);
+                    handleData(flattenedData);
+                } else if (fileName.endsWith('.csv')) {
+                    const csvData = parseCSV(content);
+                    handleData(csvData);
+                } else {
+                    document.getElementById('output').textContent = "Unsupported file type!";
+                }
+            };
+
+            if (fileInput.files.length) {
+                globalFileName = fileInput.files[0].name.split('.').slice(0, -1).join('.') + '(unflattened).json';
+                reader.readAsText(fileInput.files[0]);
+            }
+        }
+
+        function handleData(data) {
+            const unflattenedData = {};
+
+            for (const key in data) {
+                if (key.includes('.')) {
+                    setByString(unflattenedData, key, data[key]);
+                } else {
+                    unflattenedData[key] = data[key];
+                }
+            }
+
+            globalUnflattenedData = unflattenedData;
+            document.getElementById('output').textContent = JSON.stringify(unflattenedData, null, 4);
+        }
+
+        function setByString(obj, path, value) {
+            let schema = obj;
+            const pList = path.split('.');
+            const len = pList.length;
+            for (let i = 0; i < len - 1; i++) {
+                const elem = pList[i];
+                if (!schema[elem]) schema[elem] = {};
+                schema = schema[elem];
+            }
+            schema[pList[len - 1]] = value;
+        }
+
+        function downloadUnflattened() {
+            if (globalUnflattenedData && Object.keys(globalUnflattenedData).length > 0) {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(globalUnflattenedData, null, 4));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", globalFileName);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            }
+        }
+
+        function parseCSV(data) {
+            const rows = data.trim().split("\n");
+            const headers = rows[0].split(",");
+            const jsonData = {};
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].split(",");
+                for (let j = 0; j < headers.length; j++) {
+                    jsonData[headers[j]] = cells[j];
+                }
+            }
+
+            return jsonData;
+        }
+    </script>
+</body>
+
+</html>
