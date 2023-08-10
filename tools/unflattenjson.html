@@ -4,73 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unflatten JSON Tool</title>
+    <title>Unflatten JSON</title>
 </head>
 
 <body>
-
-    <input type="file" id="fileInput">
-    <button onclick="processFile()">Unflatten and Download</button>
+    <input type="file" id="upload" />
+    <button onclick="unflattenJSON()">Unflatten and View</button>
+    <button onclick="downloadUnflattened()">Download Unflattened</button>
+    <pre id="output"></pre>
 
     <script>
-        document.getElementById('fileInput').addEventListener('change', readFile);
+        let globalUnflattenedData = null;
+        let globalFileName = '';
 
-        let jsonData = {};
-        let fileName = 'unflattened.json';
+        function unflattenJSON() {
+            const fileInput = document.getElementById('upload');
+            const reader = new FileReader();
 
-        function readFile(event) {
-            const file = event.target.files[0];
-            if (file) {
-                fileName = file.name.split('.').slice(0, -1).join('.') + '(unflattened).json';
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    try {
-                        jsonData = JSON.parse(e.target.result);
-                    } catch (error) {
-                        alert('Invalid JSON file');
+            reader.onload = function (event) {
+                const content = event.target.result;
+                const flattenedData = JSON.parse(content);
+
+                const unflattenedData = {};
+
+                for (const key in flattenedData) {
+                    if (key.includes('.')) {
+                        setByString(unflattenedData, key, flattenedData[key]);
+                    } else {
+                        unflattenedData[key] = flattenedData[key];
                     }
-                };
-                reader.readAsText(file);
-            }
-        }
-
-        function processFile() {
-            const unflattened = unflatten(jsonData);
-            downloadJSON(unflattened, fileName);
-        }
-
-        function unflatten(data) {
-            const result = {};
-
-            for (let key in data) {
-                if (key.includes('.')) {
-                    const keys = key.split('.');
-                    keys.reduce((acc, val, i) => {
-                        if (i === keys.length - 1) {
-                            acc[val] = data[key];
-                        } else {
-                            acc[val] = acc[val] || {};
-                        }
-                        return acc[val];
-                    }, result);
-                } else {
-                    result[key] = data[key];
                 }
-            }
 
-            return result;
+                globalUnflattenedData = unflattenedData;
+                document.getElementById('output').textContent = JSON.stringify(unflattenedData, null, 4);
+            };
+
+            if (fileInput.files.length) {
+                globalFileName = fileInput.files[0].name.replace('.json', '(unflattened).json');
+                reader.readAsText(fileInput.files[0]);
+            }
         }
 
-        function downloadJSON(jsonData, fileName) {
-            const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
+        function setByString(obj, path, value) {
+            let schema = obj;
+            const pList = path.split('.');
+            const len = pList.length;
+            for (let i = 0; i < len - 1; i++) {
+                const elem = pList[i];
+                if (!schema[elem]) schema[elem] = {};
+                schema = schema[elem];
+            }
+            schema[pList[len - 1]] = value;
+        }
+
+        function downloadUnflattened() {
+            if (globalUnflattenedData && Object.keys(globalUnflattenedData).length > 0) {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(globalUnflattenedData, null, 4));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", globalFileName);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            }
         }
     </script>
 </body>
