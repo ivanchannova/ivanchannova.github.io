@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unflatten JSON Tool</title>
+</head>
+
+<body>
+
+    <input type="file" id="fileInput">
+    <button onclick="processFile()">Unflatten and Download</button>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', readFile);
+
+        let jsonData = {};
+
+        function readFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    try {
+                        jsonData = JSON.parse(e.target.result);
+                    } catch (error) {
+                        alert('Invalid JSON file');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function processFile() {
+            const unflattened = unflatten(jsonData);
+            downloadJSON(unflattened);
+        }
+
+        function unflatten(data) {
+            const result = {};
+
+            for (let key in data) {
+                const keys = key.split('.');
+                keys.reduce((acc, val, i) => {
+                    if (i === keys.length - 1) {
+                        acc[val] = data[key];
+                    } else {
+                        acc[val] = acc[val] || {};
+                    }
+                    return acc[val];
+                }, result);
+            }
+
+            return result;
+        }
+
+        function downloadJSON(jsonData) {
+            const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'unflattened.json';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+
+</html>
