@@ -22,17 +22,21 @@
             const reader = new FileReader();
 
             reader.onload = function (event) {
-                const content = event.target.result;
-                const fileName = fileInput.files[0].name;
+                try {
+                    const content = event.target.result;
+                    const fileName = fileInput.files[0].name;
 
-                if (fileName.endsWith('.json')) {
-                    const flattenedData = JSON.parse(content);
-                    handleData(flattenedData);
-                } else if (fileName.endsWith('.csv')) {
-                    const csvData = parseCSV(content);
-                    handleData(csvData);
-                } else {
-                    document.getElementById('output').textContent = "Unsupported file type!";
+                    if (fileName.endsWith('.json')) {
+                        const flattenedData = JSON.parse(content);
+                        handleData(flattenedData);
+                    } else if (fileName.endsWith('.csv')) {
+                        const csvData = parseCSV(content);
+                        handleData(csvData);
+                    } else {
+                        document.getElementById('output').textContent = "Unsupported file type!";
+                    }
+                } catch (error) {
+                    document.getElementById('output').textContent = "Error processing file: " + error.message;
                 }
             };
 
@@ -84,17 +88,18 @@
         function parseCSV(data) {
             const rows = data.trim().split("\n");
             const headers = rows[0].split(",");
-            const jsonData = {};
+            let jsonData = {};
 
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].split(",");
+            if (rows.length > 1) {
+                const cells = rows[1].split(",");
                 for (let j = 0; j < headers.length; j++) {
-                    jsonData[headers[j]] = cells[j];
+                    jsonData[headers[j].trim()] = cells[j] ? cells[j].trim() : '';
                 }
             }
 
             return jsonData;
         }
+
     </script>
 </body>
 
